@@ -1,58 +1,65 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div v-if="value"><!-- wait until value is populated with Palindrom state from the server -->
+    <div id="brand">
+      <div class="float">
+        <h1>Palindrom + Vue</h1>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+
+    <h3>This demo shows usage with Vue's two-way binding</h3>
+
+    <article>
+      <section>
+        <h2>Capturing Links</h2>
+
+        <p>Clicking one of the links actually sends a PATCH</p>
+        <ul>
+          <li>
+            <a href="index.html"><!-- these links are intercepted by Palindrom, see: -https://palindrom.github.io/docs/05-_Navigation_Interception/ -->
+              Albert
+              <strong>Einstein</strong>
+            </a> (index.html)
+          </li>
+          <li>
+            <a href="subpage.html">
+              Nikola
+              <strong>Tesla</strong>
+            </a> (subpage.html)
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Capturing input</h2>
+
+        <div>
+          <h4>
+            Welcome
+            <em>{{value.user.fullName}}</em>!
+          </h4>
+
+          <p>
+            <label>First Name</label>
+            <input type="text" v-model="value.user.firstName$" />
+          </p>
+
+          <p>
+            <label>Last Name</label>
+            <input type="text" v-model="value.user.lastName$" />
+          </p>
+
+          <button v-on:click="value.user.resetNameClicked$ = true">Replace with Newton!</button>
+        </div>
+      </section>
+    </article>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
-    msg: String
+    value: Object // the name of the prop must be "value" to work with v-model in the parent component
   }
-}
+};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
